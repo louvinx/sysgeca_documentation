@@ -1,0 +1,78 @@
+@startuml
+title Cas d'utilisation du module Production
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+actor "Membre" as member
+
+rectangle "Module Production" {
+  usecase "Enregistrer une production" as UC1
+  usecase "Consulter les productions" as UC2
+  usecase "Associer des membres à une production" as UC3
+  usecase "Enregistrer la quantité par membre\n(member_quantity)" as UC4
+  usecase "Ajouter un historique de production\n(vaccin, traitement, engrais, pesticide)" as UC5
+  usecase "Consulter les statistiques de production" as UC6
+  usecase "Suivre les productions d'un membre" as UC7
+}
+
+admin --> UC1
+manager --> UC1
+member --> UC7
+admin --> UC2
+manager --> UC2
+admin --> UC3
+manager --> UC3
+member --> UC3
+admin --> UC4
+manager --> UC4
+member --> UC4
+admin --> UC5
+manager --> UC5
+admin --> UC6
+manager --> UC6
+
+@enduml

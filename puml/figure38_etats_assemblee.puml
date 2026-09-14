@@ -1,0 +1,21 @@
+﻿@startuml
+title États de transition de l'assemblée
+skinparam shadowing false
+
+state "DRAFT" as draft
+state "SCHEDULED" as scheduled
+state "IN_PROGRESS" as inprogress
+state "COMPLETED" as completed
+state "CANCELLED" as cancelled
+
+[*] --> draft : création de l'assemblée
+draft --> scheduled : planification (dates, lieu)
+scheduled --> inprogress : ouverture de la séance
+inprogress --> completed : clôture + procès-verbal
+scheduled --> cancelled : annulation avant la tenue
+draft --> cancelled : annulation (brouillon)
+inprogress --> cancelled : interruption annulée
+completed --> [*]
+cancelled --> [*]
+
+@enduml

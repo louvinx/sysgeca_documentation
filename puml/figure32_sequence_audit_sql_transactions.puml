@@ -1,0 +1,27 @@
+@startuml
+title Séquence de sécurisation des transactions SQL
+
+skinparam shadowing false
+actor "Utilisateur" as user
+participant "Client React" as client
+participant "JwtAuthenticationMiddleware" as jwt
+participant "API" as api
+participant "Service" as service
+database "Database" as db
+
+user -> client: Requête (Bearer JWT)
+client -> jwt: Requête protégée
+jwt -> jwt: Valider le token (HS256)
+jwt -> api: Requête autorisée
+
+api -> service: Appel du service métier
+service -> db: Transaction SQL\n(filtrage multi-tenant automatique)
+
+alt Erreur base de données
+    db --> api: Exception gérée (422 / 500)
+else Succès
+    service -> db: Commit + enregistrement AuditLog
+    api --> user: Réponse 2xx validée
+end
+
+@enduml

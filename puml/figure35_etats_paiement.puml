@@ -1,0 +1,32 @@
+﻿@startuml
+title États de transition du paiement
+skinparam shadowing false
+
+state "PENDING" as pending
+state "PARTIAL" as partial
+state "PAID" as paid
+state "APPROVED" as approved
+state "REJECTED" as rejected
+state "OVERDUE" as overdue
+state "CANCELLED" as cancelled
+state "REFUNDED" as refunded
+state "COMPLETED" as completed
+
+[*] --> pending : création du paiement
+pending --> partial : paiement partiel enregistré
+partial --> partial : encaissement complémentaire
+partial --> paid : solde payé en totalité
+pending --> paid : paiement complet reçu
+paid --> approved : validation par le comptable
+paid --> refunded : remboursement
+approved --> completed : transaction finalisée
+pending --> overdue : échéance dépassée
+overdue --> partial : paiement partiel après retard
+overdue --> paid : régularisation
+pending --> rejected : rejet
+pending --> cancelled : annulation
+rejected --> cancelled : annulation après rejet
+cancelled --> [*]
+completed --> [*]
+
+@enduml

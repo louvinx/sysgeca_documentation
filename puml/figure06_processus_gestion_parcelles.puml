@@ -1,0 +1,39 @@
+@startuml
+title Processus de gestion des parcelles
+
+skinparam shadowing false
+
+start
+:Ouvrir la page "Parcelles" (PlotPage);
+
+if (Nouvelle parcelle ?) then (oui)
+  :Ouvrir le formulaire (CreatePlotPage);
+  :Saisir description, superficie (area),\ncoordonnées GPS (latitude/longitude),\nstatut et n° cadastral;
+  :Appel API POST /plots (PlotService.create_plot);
+else (non)
+endif
+
+if (Création réussie ?) then (non)
+  :Afficher l'erreur; stop
+else (oui)
+endif
+
+:Affecter la parcelle au membre\n(member_id - FK CASCADE);
+
+:Consulter la carte SIG (MapComponent)\net vérifier la localisation;
+
+if (Modification nécessaire ?) then (oui)
+  :Mettre à jour la parcelle\n(PUT /plots/{id} - PlotService.update_plot);
+else (non)
+endif
+
+if (Parcelle non active ?) then (oui)
+  :Changer le statut\n(ACTIVE / INACTIVE / FALLOW /\nUNDER_MAINTENANCE / LEASED /\nABANDONED / SOLD);
+endif
+
+:Suivre la superficie en hectares\n(calculate_area_in_hectares);
+
+:Journaliser dans l'audit (entité "plot");
+
+stop
+@enduml

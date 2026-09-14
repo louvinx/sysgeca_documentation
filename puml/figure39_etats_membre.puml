@@ -1,0 +1,20 @@
+﻿@startuml
+title États de transition du membre
+skinparam shadowing false
+
+state "ACTIVE" as active
+state "INACTIVE" as inactive
+state "SUSPENDED" as suspended
+state "RESIGNED" as resigned
+
+[*] --> active : inscription du membre
+active --> inactive : désactivation (PUT /members/{id}/deactivate)
+inactive --> active : réactivation (PUT /members/{id}/activate)
+active --> suspended : suspension (infraction)
+suspended --> active : levée de suspension
+suspended --> resigned : départ du membre
+inactive --> resigned : départ du membre
+active --> resigned : départ du membre (démission)
+resigned --> [*] : membre retiré (soft delete)
+
+@enduml

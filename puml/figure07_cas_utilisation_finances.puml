@@ -1,0 +1,84 @@
+@startuml
+title Cas d'utilisation du module Finances
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+actor "Comptable" as accountant
+actor "Membre" as member
+
+rectangle "Module Finances" {
+  usecase "Demander un prêt" as UC1
+  usecase "Traiter une demande de prêt\n(approuver / rejeter)" as UC2
+  usecase "Débourser un prêt" as UC3
+  usecase "Enregistrer un remboursement" as UC4
+  usecase "Consulter les statistiques des prêts" as UC5
+  usecase "Gérer les budgets\n(DRAFT / APPROVED / REJECTED)" as UC6
+  usecase "Enregistrer une dépense" as UC7
+  usecase "Gérer les comptes (plan comptable)" as UC8
+  usecase "Gérer les clients" as UC9
+  usecase "Gérer les transactions bancaires" as UC10
+  usecase "Gérer les fournisseurs" as UC11
+  usecase "Consulter le bilan et le résumé comptable" as UC12
+}
+
+member --> UC1
+accountant --> UC2
+manager --> UC2
+accountant --> UC3
+member --> UC4
+accountant --> UC4
+accountant --> UC5
+accountant --> UC6
+accountant --> UC7
+accountant --> UC8
+accountant --> UC9
+accountant --> UC10
+accountant --> UC11
+accountant --> UC12
+admin --> UC12
+
+@enduml

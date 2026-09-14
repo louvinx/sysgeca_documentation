@@ -1,0 +1,46 @@
+@startuml
+title Processus d'inscription et de gestion des membres
+
+skinparam shadowing false
+skinparam activityDiamondFontSize 12
+
+start
+:PAGE: navigate to "/members/new" (MemberForm);
+
+:Ouvrir le formulaire d'inscription\n(createMember);
+
+:Saisir les informations du membre\n(nom, prénom, sexe, date de naissance,\ntéléphone, email, identification, rôle);
+
+if (Validation Pydantic / Zod réussie ?) then (non)
+  :Afficher les erreurs de validation;
+  stop
+else (oui)
+endif
+
+:Appel API POST /api/v1/members\n(MemberService.create_member);
+
+if (Création réussie ?) then (non)
+  :Afficher le message d'erreur\n(apiErrorHandler);
+  stop
+else (oui)
+endif
+
+:Créer le compte utilisateur associé\n(User lié au membre - 1:1);
+
+:Affecter le membre à la coopérative\n(cooperative_id);
+
+:Ajouter le membre à un rôle\n(RoleId - COOP_MANAGER / MEMBER);
+
+:Générer la liste des membres\n(GET /members + pagination);
+
+:Consulter / Modifier le profil\n(GET /members/{id} - PUT /members/{id});
+
+if (Statut à modifier ?) then (oui)
+  :Activer, désactiver ou modifier le statut\n(PUT /members/{id}/status);
+else (non)
+endif
+
+:Journaliser l'action dans l'audit\n(AuditLog - entité "member");
+
+stop
+@enduml

@@ -1,0 +1,33 @@
+﻿@startuml
+title États de transition du stock
+skinparam shadowing false
+
+state "AVAILABLE" as available
+state "RESERVED" as reserved
+state "LOW" as low
+state "SOLD" as sold
+state "DEPLETED" as depleted
+state "EXPIRED" as expired
+state "DAMAGED" as damaged
+state "TRANSFERRED" as transferred
+state "QUARANTINE" as quarantine
+
+[*] --> available : stock créé (lié à la production)
+available --> reserved : réserve pour une vente
+available --> low : quantité sous le seuil minimum
+low --> available : réapprovisionnement
+available --> expired : date de péremption dépassée
+available --> damaged : détérioration constatée
+reserved --> sold : vente finalisée
+sold --> depleted : quantité épuisée
+reserved --> available : annulation de la réservation
+available --> transferred : transfert entre entrepôts
+available --> quarantine : contrôle qualité
+quarantine --> available : inspection validée
+quarantine --> damaged : inspection négative
+depleted --> [*]
+expired --> [*]
+damaged --> [*]
+transferred --> [*]
+
+@enduml

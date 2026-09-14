@@ -1,0 +1,76 @@
+@startuml
+title Cas d'utilisation du module Parcelles (SIG)
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+actor "Membre" as member
+
+rectangle "Module Parcelles (SIG)" {
+  usecase "Créer une parcelle" as UC1
+  usecase "Consulter la liste des parcelles" as UC2
+  usecase "Consulter les parcelles d'un membre" as UC3
+  usecase "Localiser une parcelle sur la carte\n(OpenLayers - lat/long)" as UC4
+  usecase "Modifier une parcelle" as UC5
+  usecase "Supprimer une parcelle" as UC6
+  usecase "Suivre le statut de la parcelle\n(ACTIVE, FALLOW, LEASED...)" as UC7
+}
+
+admin --> UC1
+manager --> UC1
+member --> UC3
+admin --> UC2
+manager --> UC2
+admin --> UC4
+manager --> UC4
+admin --> UC5
+manager --> UC5
+admin --> UC6
+manager --> UC6
+admin --> UC7
+manager --> UC7
+
+@enduml

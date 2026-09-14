@@ -1,0 +1,29 @@
+@startuml
+title Séquence de collecte des cotisations
+
+skinparam shadowing false
+actor "Comptable" as accountant
+participant "ContributionPlansPage" as page
+participant "ContributionPlanService" as service
+database "Database" as db
+
+accountant -> page: Créer un plan de cotisation
+page -> service: Créer le plan
+service -> db: Enregistrer le plan (ACTIVE)
+
+accountant -> page: Exécuter le plan
+page -> service: Lancer la collecte
+
+loop Pour chaque membre
+    alt Paiement effectué
+        service -> db: Enregistrer le paiement (PAID)
+    else Non payé
+        service -> service: Marquer non payé + pénalités
+    end
+end
+
+accountant -> page: Consulter les membres en retard
+page -> service: Récupérer les retardataires
+service --> page: Tableau de conformité (total collecté)
+
+@enduml

@@ -1,0 +1,15 @@
+﻿@startuml
+title États de transition du budget
+skinparam shadowing false
+
+state "DRAFT" as draft
+state "APPROVED" as approved
+state "REJECTED" as rejected
+
+[*] --> draft : création du budget (brouillon)
+draft --> approved : approbation par l'administrateur
+draft --> rejected : rejet (corrections demandées)
+rejected --> draft : révision et resoumission
+approved --> [*] : budget exécuté (fin de période)
+
+@enduml

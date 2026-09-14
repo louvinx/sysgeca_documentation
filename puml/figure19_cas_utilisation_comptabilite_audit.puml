@@ -1,0 +1,75 @@
+@startuml
+title Cas d'utilisation du module Comptabilité et Audit
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+
+actor "Comptable" as accountant
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+
+rectangle "Module Comptabilité et Audit" {
+  usecase "Consulter le résumé comptable\n(accounting-summary)" as UC1
+  usecase "Gérer les budgets\n(DRAFT / APPROVED / REJECTED)" as UC2
+  usecase "Gérer les dépenses\n(statut APPROVED / REJECTED)" as UC3
+  usecase "Gérer le plan comptable (comptes)" as UC4
+  usecase "Consulter le bilan (balance-sheet)" as UC5
+  usecase "Gérer les transactions bancaires\n(DEBIT / CREDIT)" as UC6
+  usecase "Consulter les journaux d'audit\n(GET /audit/logs)" as UC7
+  usecase "Suivre les actions par utilisateur\n(GET /audit/user/{id})" as UC8
+}
+
+accountant --> UC1
+accountant --> UC2
+accountant --> UC3
+accountant --> UC4
+accountant --> UC5
+accountant --> UC6
+accountant --> UC7
+admin --> UC7
+accountant --> UC8
+admin --> UC8
+
+@enduml

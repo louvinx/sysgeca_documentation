@@ -1,0 +1,22 @@
+@startuml
+title Séquence de remboursement d'un prêt
+
+skinparam shadowing false
+actor "Membre" as member
+participant "LoanPaymentPage" as page
+participant "LoanService" as service
+database "Database" as db
+
+member -> page: Effectuer un remboursement
+page -> service: Enregistrer le paiement
+service -> db: Mettre à jour le solde\nrestant du prêt
+
+alt Solde total payé
+    service -> db: Clôturer le prêt (COMPLETED)
+else Solde partiel
+    service -> db: Prêt reste ACTIVE
+end
+
+service --> page: Récapitulatif (solde restant)
+
+@enduml

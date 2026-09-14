@@ -1,0 +1,82 @@
+@startuml
+title Cas d'utilisation du module Stocks
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+
+rectangle "Module Stocks" {
+  usecase "Créer un stock" as UC1
+  usecase "Consulter les stocks" as UC2
+  usecase "Rechercher un stock" as UC3
+  usecase "Consulter les stocks bas\n(seuil minimum)" as UC4
+  usecase "Consulter les stocks expirés" as UC5
+  usecase "Modifier un stock\n(quantité, seuils, entrepôt)" as UC6
+  usecase "Supprimer un stock" as UC7
+  usecase "Consulter les statistiques de stock" as UC8
+  usecase "Gérer le statut du stock\n(AVAILABLE, RESERVED, EXPIRED...)" as UC9
+}
+
+admin --> UC1
+manager --> UC1
+admin --> UC2
+manager --> UC2
+admin --> UC3
+manager --> UC3
+admin --> UC4
+manager --> UC4
+admin --> UC5
+manager --> UC5
+admin --> UC6
+manager --> UC6
+admin --> UC7
+admin --> UC8
+manager --> UC8
+admin --> UC9
+manager --> UC9
+
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+title Cas d'utilisation du module Membres
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+actor "Membre" as member
+
+rectangle "Module Membres" {
+  usecase "Créer un membre" as UC1
+  usecase "Consulter la liste des membres" as UC2
+  usecase "Rechercher un membre" as UC3
+  usecase "Modifier les informations d'un membre" as UC4
+  usecase "Activer / Désactiver un membre" as UC5
+  usecase "Modifier le statut d'un membre" as UC6
+  usecase "Supprimer un membre" as UC7
+  usecase "Réinitialiser le mot de passe" as UC8
+  usecase "Consulter son profil" as UC9
+}
+
+admin --> UC1
+manager --> UC1
+member --> UC9
+admin --> UC2
+manager --> UC2
+admin --> UC3
+manager --> UC3
+admin --> UC4
+manager --> UC4
+admin --> UC5
+manager --> UC5
+admin --> UC6
+manager --> UC6
+admin --> UC7
+manager --> UC7
+admin --> UC8
+manager --> UC8
+
+@enduml

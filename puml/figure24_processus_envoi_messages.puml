@@ -1,0 +1,42 @@
+@startuml
+title Processus d'envoi de messages
+
+skinparam shadowing false
+
+start
+:Ouvrir la messagerie (MessagingPage);
+
+if (Nouveau message ?) then (oui)
+  :Ouvrir le MessageComposer;
+else (non)
+  :Consulter la boîte de réception\n(GET /messages/inbox - polling 30s);
+endif
+
+:Rédiger le message\n(sujet, contenu, destinataire(s));
+
+if (Type de message ?) then (Annonce)
+  :Publier une annonce\n(MessageType ANNOUNCEMENT - broadcast à tous les membres);
+elseif (Type de message ?) then (Personnel)
+  :Sélectionner le(s) destinataire(s) membre(s)\n(MessageType PERSONAL);
+else (Système)
+  :Notification générée par le système\n(NotificationType STOCK_ALERT, LOAN_OVERDUE, PAYMENT_LATE, BUDGET_EXCEEDED...);
+endif
+
+:Envoyer le message (POST /messages\n- MessageService);
+
+if (Envoi réussi ?) then (non)
+  :Afficher l'erreur (apiErrorHandler);
+  stop
+else (oui)
+endif
+
+:Le destinataire consulte et marque comme lu\n(PUT /messages/{id}/read);
+
+:Vérifier le nombre de messages non lus\n(GET /messages/unread-count);
+
+if (Nettoyage périodique ?) then (oui)
+  :Suppression des messages expirés\n(POST /messages/cleanup);
+endif
+
+stop
+@enduml

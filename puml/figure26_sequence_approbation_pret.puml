@@ -1,0 +1,25 @@
+@startuml
+title Séquence d'approbation d'un prêt
+
+skinparam shadowing false
+actor "Membre" as member
+participant "LoanRequestPage" as page
+participant "LoanService" as service
+database "Database" as db
+
+member -> page: Remplir la demande de prêt
+page -> service: Créer la demande
+service -> db: Enregistrer (PENDING)
+
+member -> page: Traiter la demande
+page -> service: Approuver le prêt
+service -> service: Vérifier la solvabilité
+alt Crédit acceptable
+    service -> db: Statut APPROVED\n+ calcul des échéances
+    service --> page: Prêt approuvé
+else Crédit refusé
+    service -> db: Statut REJECTED\n+ motif
+    service --> page: Prêt rejeté
+end
+
+@enduml

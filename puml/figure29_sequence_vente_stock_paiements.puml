@@ -1,0 +1,21 @@
+@startuml
+title Séquence de vente de stock
+
+skinparam shadowing false
+actor "Gestionnaire" as manager
+participant "CreateSaleForm" as page
+participant "SalesService" as service
+database "Database" as db
+
+manager -> page: Saisir client, quantité, prix unitaire
+page -> service: Créer la vente
+service -> db: Mettre à jour le stock (SOLD) + total
+service --> page: Facture générée
+
+loop Paiements échelonnés restants
+    manager -> page: Encaisser un paiement
+    page -> service: Enregistrer le paiement
+    service -> db: Mettre à jour le solde impayé
+end
+
+@enduml

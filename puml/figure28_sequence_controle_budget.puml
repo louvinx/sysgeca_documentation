@@ -1,0 +1,22 @@
+@startuml
+title Séquence de contrôle de budget
+
+skinparam shadowing false
+actor "Comptable" as accountant
+participant "ExpensesPage" as page
+participant "ExpenseService" as service
+database "Database" as db
+
+accountant -> page: Enregistrer une dépense
+page -> service: Créer la dépense
+service -> db: Vérifier le budget de la période
+
+alt Dépense <= budget restant
+    service -> db: Enregistrer la dépense (APPROVED)
+else Dépassement de budget
+    service -> service: Générer l'alerte BUDGET_EXCEEDED
+end
+
+service --> page: Confirmation + alerte éventuelle
+
+@enduml

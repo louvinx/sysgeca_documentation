@@ -1,0 +1,32 @@
+@startuml
+title Architecture en couches du système SYSGECA
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package "Couche Présentation\n(React + Vite)" {
+  [Pages]
+  [Services API (axios)]
+}
+
+package "Couche API\n(FastAPI - /api/v1)" {
+  [Router / JWT Auth]
+  [Schémas Pydantic]
+}
+
+package "Couche Métier" {
+  [Services]
+  [Repositories]
+}
+
+package "Couche Données" {
+  database "PostgreSQL / SQLite" as DB
+}
+
+[Pages] -down-> [Services API (axios)]
+[Services API (axios)] -down-> [Router / JWT Auth]
+[Router / JWT Auth] -down-> [Services]
+[Services] -down-> [Repositories]
+[Repositories] -down-> DB
+
+@enduml

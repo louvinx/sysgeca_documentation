@@ -1,0 +1,30 @@
+@startuml
+title Séquence d'authentification
+
+skinparam shadowing false
+actor "Utilisateur" as user
+participant "LoginPage" as page
+participant "AuthService" as service
+database "Database" as db
+
+user -> page: Saisir identifiants
+page -> service: Se connecter
+service -> db: Vérifier identifiants (Argon2)
+
+alt Identifiants valides
+    service -> service: Générer le JWT (HS256)
+    service --> page: Token + profil
+
+    user -> page: Accéder à une route protégée
+    page -> service: Requête (Bearer token)
+    service -> service: Vérifier le token
+    alt Token valide
+        service --> user: Accès autorisé
+    else Token expiré / invalide
+        service --> page: 401 Unauthorized
+    end
+else Identifiants invalides
+    service --> page: 401 - erreur affichée
+end
+
+@enduml

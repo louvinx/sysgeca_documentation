@@ -1,0 +1,71 @@
+@startuml
+title Cas d'utilisation du module Administration
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+
+actor "Administrateur" as admin
+
+rectangle "Module Administration" {
+  usecase "Créer / configurer la coopérative" as UC1
+  usecase "Gérer les rôles\n(COOP_ADMIN, COOP_MANAGER,\nCOOP_ACCOUNTANT, MEMBER)" as UC2
+  usecase "Gérer les paramètres de la coopérative\n(devise HTG, langue, fuseau, feature flags)" as UC3
+  usecase "Consulter le tableau de bord complet\n(GET /dashboard/cooperatives/complete)" as UC4
+  usecase "Gérer la corbeille\n(restaurer / supprimer définitivement)" as UC5
+  usecase "Consulter le cache et l'invalider" as UC6
+  usecase "Uploader des images" as UC7
+  usecase "Surveiller la santé du système\n(GET /health)" as UC8
+}
+
+admin --> UC1
+admin --> UC2
+admin --> UC3
+admin --> UC4
+admin --> UC5
+admin --> UC6
+admin --> UC7
+admin --> UC8
+
+@enduml

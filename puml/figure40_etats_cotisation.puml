@@ -1,0 +1,19 @@
+﻿@startuml
+title États de transition de la cotisation
+skinparam shadowing false
+
+state "ACTIVE" as active
+state "PAUSED" as paused
+state "COMPLETED" as completed
+state "CANCELLED" as cancelled
+
+[*] --> active : création du plan de cotisation
+active --> paused : suspension temporaire du plan
+paused --> active : reprise du plan
+active --> completed : plan exécuté (fin de période)
+active --> cancelled : annulation du plan
+paused --> cancelled : annulation depuis la suspension
+completed --> [*]
+cancelled --> [*]
+
+@enduml

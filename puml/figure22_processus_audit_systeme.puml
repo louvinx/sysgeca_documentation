@@ -1,0 +1,35 @@
+@startuml
+title Processus d'audit du système
+
+skinparam shadowing false
+
+start
+:Utilisateur effectue une action\n(création, modification, suppression, connexion);
+
+:Le middleware et les services interceptent l'action;
+:Le filtre multi-tenant est appliqué\n(cooperative_id / member_id);
+
+:Enregistrer le journal d'audit (AuditLog)\n- action, entité, identifiant, description,
+- utilisateur, coopérative, horodatage;
+
+if (Action sensible (finances, gouvernance) ?) then (oui)
+  :Journaliser les changements détaillés\n(changes JSON avant / après);
+else (non)
+endif
+
+if (Suppression ?) then (oui)
+  :Suppression douce (soft delete)\n- is_deleted = true, deleted_at;
+  :Ajouter l'élément à la corbeille;
+else (non)
+endif
+
+:Consulter les journaux\n(GET /audit/logs, /audit/user/{id},
+/audit/entity/{type}/{id});
+
+if (Purge des éléments supprimés > 30 jours ?) then (oui)
+  :Suppression définitive automatique\n(AsyncIOScheduler - TrashService\n- 3h00 quotidien);
+endif
+
+:Analyser l'audit pour la conformité;
+stop
+@enduml

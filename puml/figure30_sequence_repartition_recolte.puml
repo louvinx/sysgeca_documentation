@@ -1,0 +1,28 @@
+@startuml
+title Séquence de répartition de récolte
+
+skinparam shadowing false
+actor "Gestionnaire" as manager
+participant "ProductionForm" as page
+participant "ProductionService" as service
+database "Database" as db
+
+manager -> page: Enregistrer la production
+page -> service: Créer la production
+service -> db: Enregistrer la production
+
+manager -> page: Ajouter les membres participants
+page -> service: Associer les membres
+
+loop Pour chaque membre
+    manager -> page: Répartir la quantité récoltée
+    page -> service: Mettre à jour la quantité
+    service -> db: Mettre à jour la répartition
+end
+
+manager -> page: Valider la répartition
+manager -> page: Consulter la valorisation
+page -> service: Calculer la valeur totale
+service --> page: Valorisation affichée
+
+@enduml

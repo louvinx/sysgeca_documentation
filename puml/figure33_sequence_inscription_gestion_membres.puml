@@ -1,0 +1,23 @@
+@startuml
+title Séquence d'inscription d'un membre
+
+skinparam shadowing false
+actor "Administrateur" as admin
+participant "MemberForm" as page
+participant "MemberService" as service
+database "Database" as db
+
+admin -> page: Remplir le formulaire d'inscription
+page -> page: Valider les données
+
+admin -> page: Soumettre le formulaire
+page -> service: Créer le membre
+service -> service: Vérifier l'unicité (email, téléphone)
+service -> db: Créer le membre + compte (Argon2)
+service --> page: Membre créé (201)
+
+admin -> page: Modifier le statut (actif/inaictif)
+page -> service: Mettre à jour le statut
+service -> db: Mettre à jour le statut
+
+@enduml

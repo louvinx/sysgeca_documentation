@@ -1,0 +1,79 @@
+@startuml
+title Cas d'utilisation du module Cotisations
+
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor White
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #000000
+}
+
+skinparam actor {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 14
+  FontStyle bold
+}
+
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #000000
+  FontColor #000000
+  FontSize 13
+}
+
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor #808080
+  FontColor #000000
+  FontSize 13
+  FontStyle bold
+}
+
+skinparam arrow {
+  Color #000000
+  FontColor #000000
+}
+
+skinparam line {
+  Color #000000
+}
+
+
+actor "Administrateur" as admin
+actor "Gestionnaire" as manager
+actor "Comptable" as accountant
+actor "Membre" as member
+
+rectangle "Module Cotisations" {
+  usecase "Créer un plan de cotisation" as UC1
+  usecase "Configurer le type, le montant et la fréquence\n(MEMBERSHIP_FEE, MONTHLY_CONTRIBUTION...)" as UC2
+  usecase "Exécuter le plan de cotisation" as UC3
+  usecase "Enregistrer un paiement de membre" as UC4
+  usecase "Marquer un membre comme payé / non payé" as UC5
+  usecase "Appliquer les pénalités de retard" as UC6
+  usecase "Consulter les membres en retard" as UC7
+  usecase "Consulter les statistiques de collecte" as UC8
+  usecase "Suspendre / annuler un plan" as UC9
+}
+
+admin --> UC1
+manager --> UC1
+accountant --> UC2
+admin --> UC2
+accountant --> UC3
+accountant --> UC4
+member --> UC4
+accountant --> UC5
+accountant --> UC6
+accountant --> UC7
+accountant --> UC8
+admin --> UC9
+
+@enduml
