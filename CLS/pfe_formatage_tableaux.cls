@@ -30,7 +30,7 @@ Sub FormaterTableauxPFE()
 
     Application.ScreenUpdating = True
 
-    MsgBox "Mise en forme des tableaux PFE terminee : tableau simple," & vbCrLf & _
+    MsgBox "Mise en forme des tableaux PFE terminee : tableau vert," & vbCrLf & _
            "alignement gauche, interligne simple, aucun retrait," & vbCrLf & _
            "legendes de tableaux centrees et reduites.", vbInformation
 
@@ -63,15 +63,15 @@ Sub FormaterTousLesTableaux(doc As Document)
         tbl.LeftPadding = 5
         tbl.RightPadding = 5
 
-        '--- Bordures simples : quadrillage complet, fines lignes noires ---
+        '--- Bordures simples : quadrillage complet, fines lignes vertes ---
         With tbl.Borders
             .Enable = True
             .InsideLineStyle = wdLineStyleSingle
             .OutsideLineStyle = wdLineStyleSingle
             .InsideLineWidth = wdLineWidth050pt
-            .OutsideLineWidth = wdLineWidth050pt
-            .InsideColor = wdColorBlack
-            .OutsideColor = wdColorBlack
+            .OutsideLineWidth = wdLineWidth100pt
+            .InsideColor = RGB(84, 130, 53)    ' vert moyen
+            .OutsideColor = RGB(46, 87, 41)    ' vert fonce (contour plus marque)
         End With
 
         '--- Toutes les cellules : gauche, jamais justifie, AUCUN retrait,
@@ -106,20 +106,20 @@ Sub FormaterTousLesTableaux(doc As Document)
 
         Next cel
 
-        '--- Premiere ligne = en-tete (sans fond de couleur, juste gras + ligne de separation) ---
+        '--- Premiere ligne = en-tete (fond vert fonce, texte blanc en gras) ---
         If tbl.Rows.Count > 0 Then
             tbl.Rows(1).HeadingFormat = True
 
             For j = 1 To tbl.Rows(1).Cells.Count
                 With tbl.Rows(1).Cells(j)
-                    .Shading.BackgroundPatternColor = RGB(230, 230, 230)
+                    .Shading.BackgroundPatternColor = RGB(56, 118, 29)   ' vert fonce
                     .Shading.Texture = wdTextureNone
 
                     With .Range
                         .Font.Name = "Times New Roman"
                         .Font.Size = 11
                         .Font.Bold = True
-                        .Font.Color = wdColorBlack
+                        .Font.Color = wdColorWhite
                         With .ParagraphFormat
                             .Alignment = wdAlignParagraphCenter
                             .FirstLineIndent = 0
@@ -130,10 +130,14 @@ Sub FormaterTousLesTableaux(doc As Document)
             Next j
         End If
 
-        '--- Corps du tableau : fond blanc uniforme (style academique, pas de bandes colorees) ---
+        '--- Corps du tableau : fond blanc / vert tres pale en alternance douce ---
         For i = 2 To tbl.Rows.Count
             For j = 1 To tbl.Rows(i).Cells.Count
-                tbl.Rows(i).Cells(j).Shading.BackgroundPatternColor = wdColorWhite
+                If i Mod 2 = 0 Then
+                    tbl.Rows(i).Cells(j).Shading.BackgroundPatternColor = RGB(235, 245, 230) ' vert tres pale
+                Else
+                    tbl.Rows(i).Cells(j).Shading.BackgroundPatternColor = wdColorWhite
+                End If
                 tbl.Rows(i).Cells(j).Shading.Texture = wdTextureNone
             Next j
         Next i
