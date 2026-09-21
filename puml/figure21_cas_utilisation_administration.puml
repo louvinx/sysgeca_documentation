@@ -46,11 +46,11 @@ skinparam line {
 }
 
 
-actor "Administrateur" as admin
+actor "Administrateur de Coopérative" as admin
 
 rectangle "Module Administration" {
   usecase "Créer / configurer la coopérative" as UC1
-  usecase "Gérer les rôles\n(COOP_ADMIN, COOP_MANAGER,\nCOOP_ACCOUNTANT, MEMBER)" as UC2
+  usecase "Gérer les rôles\n(Administrateur de Coopérative, Gestionnaire de Coopérative,\nComptable de Coopérative, Membre)" as UC2
   usecase "Gérer les paramètres de la coopérative\n(devise HTG, langue, fuseau, feature flags)" as UC3
   usecase "Consulter le tableau de bord complet\n(GET /dashboard/cooperatives/complete)" as UC4
   usecase "Gérer la corbeille\n(restaurer / supprimer définitivement)" as UC5

@@ -2,7 +2,7 @@
 title Séquence d'inscription d'un membre
 
 skinparam shadowing false
-actor "Administrateur" as admin
+actor "Administrateur de Coopérative" as admin
 participant "MemberForm" as page
 participant "MemberService" as service
 database "Database" as db

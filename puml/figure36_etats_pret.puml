@@ -10,21 +10,17 @@ state "DISBURSED" as disbursed
 state "ACTIVE" as active
 state "COMPLETED" as completed
 state "DEFAULTED" as defaulted
-state "WRITTEN_OFF" as written_off
-state "CLOSED" as closed
 
-[*] --> pending : demande créée (POST /loans)
-pending --> review : demande en cours d'examen
-review --> approved : approbation (crédit solvable)
-review --> rejected : rejet (crédit insuffisant)
-rejected --> [*] : prêt rejeté avec motif
+[*] --> pending : demande créée
+pending --> review : examen de la demande
+review --> approved : approbation
+review --> rejected : rejet
+rejected --> [*]
 approved --> disbursed : décaissement des fonds
-disbursed --> active : prêt actif (remboursements en cours)
-active --> completed : solde total remboursé
+disbursed --> active : remboursements en cours
+active --> completed : solde remboursé
 active --> defaulted : défaut de paiement
-defaulted --> written_off : perte constatée
-completed --> closed : clôture automatique
-written_off --> closed : clôture
-closed --> [*]
+completed --> [*]
+defaulted --> [*]
 
 @enduml

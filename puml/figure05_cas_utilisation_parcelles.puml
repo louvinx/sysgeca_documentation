@@ -45,8 +45,8 @@ skinparam line {
   Color #000000
 }
 
-actor "Administrateur" as admin
-actor "Gestionnaire" as manager
+actor "Administrateur de Coopérative" as admin
+actor "Gestionnaire de Coopérative" as manager
 actor "Membre" as member
 
 rectangle "Module Parcelles (SIG)" {

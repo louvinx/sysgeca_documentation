@@ -2,7 +2,7 @@
 title Séquence de contrôle de budget
 
 skinparam shadowing false
-actor "Comptable" as accountant
+actor "Comptable de Coopérative" as accountant
 participant "ExpensesPage" as page
 participant "ExpenseService" as service
 database "Database" as db

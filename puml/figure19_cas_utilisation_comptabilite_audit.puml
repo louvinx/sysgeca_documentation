@@ -46,9 +46,9 @@ skinparam line {
 }
 
 
-actor "Comptable" as accountant
-actor "Administrateur" as admin
-actor "Gestionnaire" as manager
+actor "Comptable de Coopérative" as accountant
+actor "Administrateur de Coopérative" as admin
+actor "Gestionnaire de Coopérative" as manager
 
 rectangle "Module Comptabilité et Audit" {
   usecase "Consulter le résumé comptable\n(accounting-summary)" as UC1

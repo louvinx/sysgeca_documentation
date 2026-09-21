@@ -46,9 +46,9 @@ skinparam line {
 }
 
 
-actor "Administrateur" as admin
-actor "Gestionnaire" as manager
-actor "Comptable" as accountant
+actor "Administrateur de Coopérative" as admin
+actor "Gestionnaire de Coopérative" as manager
+actor "Comptable de Coopérative" as accountant
 
 rectangle "Module Ventes" {
   usecase "Créer une vente de stock" as UC1

@@ -29,7 +29,7 @@ endif
 
 :Affecter le membre à la coopérative\n(cooperative_id);
 
-:Ajouter le membre à un rôle\n(RoleId - COOP_MANAGER / MEMBER);
+:Ajouter le membre à un rôle\n(Administrateur de Coopérative, Gestionnaire de Coopérative,\nComptable de Coopérative, Membre);
 
 :Générer la liste des membres\n(GET /members + pagination);
 

@@ -2,7 +2,7 @@
 title Séquence de collecte des cotisations
 
 skinparam shadowing false
-actor "Comptable" as accountant
+actor "Comptable de Coopérative" as accountant
 participant "ContributionPlansPage" as page
 participant "ContributionPlanService" as service
 database "Database" as db

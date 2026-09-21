@@ -2,7 +2,7 @@
 title Séquence de répartition de récolte
 
 skinparam shadowing false
-actor "Gestionnaire" as manager
+actor "Gestionnaire de Coopérative" as manager
 participant "ProductionForm" as page
 participant "ProductionService" as service
 database "Database" as db

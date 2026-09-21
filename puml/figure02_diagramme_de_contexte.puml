@@ -4,8 +4,8 @@ title Diagramme de cas utilisation du système SYSGECA
 left to right direction
 skinparam shadowing false
 
-actor "Administrateur" as admin
-actor "Gestionnaire" as manager
+actor "Administrateur de Coopérative" as admin
+actor "Gestionnaire de Coopérative" as manager
 actor "Personnel" as personnel
 actor "Membre" as membre
 

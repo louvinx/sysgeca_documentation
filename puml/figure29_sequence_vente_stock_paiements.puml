@@ -2,7 +2,7 @@
 title Séquence de vente de stock
 
 skinparam shadowing false
-actor "Gestionnaire" as manager
+actor "Gestionnaire de Coopérative" as manager
 participant "CreateSaleForm" as page
 participant "SalesService" as service
 database "Database" as db
