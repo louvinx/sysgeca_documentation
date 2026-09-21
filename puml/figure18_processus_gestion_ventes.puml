@@ -1,30 +1,19 @@
 @startuml
-title Processus de gestion des ventes
+title Gestion des ventes
 
 skinparam shadowing false
 
 start
-:Ouvrir la page des ventes (SalesPage);
-
-:Sélectionner le stock disponible\n(GET /stocks - statut AVAILABLE);
-
-:Créer la vente (POST /sales - SalesService)\n- lot, stock, client, quantité, prix unitaire;
-
-:Calculer le montant total automatiquement\n(total_amount = quantity_sold * unit_price\n- colonne Computed);
-
+:Sélectionner le stock disponible;
+:Créer la vente\n(lot, client, quantité, prix);
+:Calculer le montant total;
 if (Paiement en plusieurs fois ?) then (oui)
-  :Enregistrer un premier paiement échelonné\n(Payment type SALE - PENDING / PARTIAL);
+  :Enregistrer un paiement\néchelonné (PARTIAL);
 else (non)
-  :Enregistrer le paiement complet (PAID);
+  :Paiement complet (PAID);
 endif
-
-:Créer la livraison associée (Delivery)\n- suivi PENDING / IN_TRANSIT / DELIVERED;
-
-:Mettre à jour la quantité du stock\n(SOLD / DEPLETED);
-
-:Générer la facture (POST /exports/invoice);
-
-:Suivre les paiements restants (GET /sales/{id});
-
+:Créer la livraison;
+:Mettre à jour le stock;
+:Générer la facture;
 stop
 @enduml

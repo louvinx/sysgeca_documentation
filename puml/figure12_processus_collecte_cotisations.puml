@@ -1,33 +1,19 @@
 @startuml
-title Processus de collecte et de conformité des cotisations
+title Collecte des cotisations
 
 skinparam shadowing false
 
 start
-:Créer un plan de cotisation\n(POST /contribution-plans - ContributionPlanService);
-
-:Configurer le type de cotisation, le montant,\nla fréquence et les dates (ACTIVE);
-
-:Exécuter le plan (POST /contribution-plans/{id}/execute);
-
-:Chercher les membres concernés\n(GET /contribution-plans/{id}/members);
-
+:Créer le plan de cotisation\n(montant, fréquence, dates);
+:Exécuter le plan;
 repeat
-  :Vérifier si le membre a payé sa cotisation;
-
-  if (Paiement effectué ?) then (oui)
-    :Enregistrer le paiement\n(POST /contribution-plans/{id}/payments\n- Payment statut PAID);
-  else (non)
-    :Marquer comme non payé\n(POST .../members/{id}/mark-unpaid);
-    :Appliquer les pénalités de retard si applicable\n(POST .../members/{id}/apply-late-fees);
-    :Générer la notification PAYMENT_LATE;
+  :Vérifier le paiement du membre;
+  if (Payé ?) then (non)
+    :Marquer comme non payé\n+ pénalités / notification;
+  else (oui)
   endif
-
-  :Consulter les membres en retard\n(GET /contribution-plans/{id}/overdue-members);
-repeat while (D'autres membres à vérifier ?) is (oui)
+repeat while (D'autres membres ?) is (oui)
 -> (non);
-
-:Consulter le total collecté et les statistiques\n(GET /contribution-plans/total-collected,\n/statistics);
-
+:Consulter le total collecté;
 stop
 @enduml

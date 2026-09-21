@@ -1,41 +1,23 @@
 @startuml
-title Processus de demande et de traitement d'un prêt
+title Demande et traitement d'un prêt
 
 skinparam shadowing false
 
 start
-:Membre: remplir la demande de prêt\n(LoanRequestPage - POST /loans);
-
-:Créer le prêt avec statut PENDING\n(montant demandé, durée, taux, objet);
-
-if (Demande reçue par le gestionnaire/comptable ?) then (non)
-  :Le prêt reste en attente (PENDING); stop
-else (oui)
-endif
-
-:Passer le prêt en UNDER_REVIEW\n(PUT /loans/{id}/status);
-
-:Vérifier la solvabilité du membre\n(GET /loans/member/{id}/credit-score\n- ScoringService);
-
+:Membre : remplir la demande\n(montant, durée, taux);
+:Statut PENDING;
+:Étude de la demande\n(gestionnaire / comptable);
 if (Crédit acceptable ?) then (non)
-  :Rejeter le prêt (POST /loans/{id}/reject)\n- statut REJECTED avec motif; stop
+  :Rejeter le prêt (REJECTED);
+  stop
 else (oui)
 endif
-
-:Approuver le prêt (POST /loans/{id}/approve)\n- statut APPROVED, calcul des échéances\n(total_repayment = montant + intérêts);
-
-:Débourser le prêt (POST /loans/{id}/disburse)\n- statut DISBURSED puis ACTIVE;
-
-:Enregistrer les remboursements\n(POST /loans/{id}/payments\n- transaction REPAYMENT);
-
-if (Prêt entièrement remboursé ?) then (non)
-  :Suivre les paiements en retard\n(GET /loans/overdue - notif LOAN_OVERDUE);
+:Approuver et débourser\n(APPROVED → DISBURSED);
+:Enregistrer les remboursements;
+if (Prêt remboursé ?) then (non)
+  :Suivre les paiements en retard;
 else (oui)
 endif
-
-:Clôturer le prêt - statut COMPLETED / CLOSED;
-
-:Journaliser dans l'audit (entité "loan");
-
+:Clôturer le prêt (COMPLETED);
 stop
 @enduml
