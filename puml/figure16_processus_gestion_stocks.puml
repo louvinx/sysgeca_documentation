@@ -1,34 +1,22 @@
 @startuml
-title Processus de gestion des stocks
+title Gestion des stocks
 
 skinparam shadowing false
 
 start
-:Lier/créer le stock à partir de la production\n(POST /stocks - StockService, unique production_id);
-
-:Configurer la quantité courante et les seuils\n(current_quantity, minimum_threshold,\nmaximum_threshold);
-
-:Configurer l'entrepôt\n(warehouse_name, zone, stockage);
-
-:État initial AVAILABLE;
-
-if (Quantité sous le seuil minimum ?) then (non)
+:Créer le stock\n(quantité, seuils, entrepôt);
+if (Quantité sous le seuil ?) then (non)
 else (oui)
-  :Passer à LOW et générer la notification\nSTOCK_ALERT;
+  :Alerte stock bas (LOW);
 endif
-
-if (Date de péremption dépassée ?) then (oui)
-  :Statut EXPIRED (- GET /stocks/expired);
+if (Périmé ?) then (oui)
+  :Statut EXPIRED;
 else (non)
 endif
-
-:Vente du stock -> statut SOLD / DEPLETED;
-:Réserve -> statut RESERVED;
-:Transaction au stock -> statut DAMAGED /\nQUARANTINE / TRANSFERRED;
-
-:Effectuer l'inventaire\n(Réel - last_inventory_check);
-
-:Consulter les stocks bas\n(GET /stocks/low - alertes);
-
+if (Mouvement de stock ?) then (oui)
+  :Vente / réserve / transfert\n(SOLD, RESERVED, TRANSFERRED);
+else (non)
+endif
+:Effectuer l'inventaire;
 stop
 @enduml

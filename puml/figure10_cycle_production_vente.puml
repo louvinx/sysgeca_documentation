@@ -1,38 +1,21 @@
 @startuml
-title Cycle de production et de vente
+title Cycle production et vente
 
 skinparam shadowing false
 
 start
-:Planifier la culture\n(AgriculturalCalendar - CropPlan:\nsemis, fertilisation, irrigation, récolte);
-
-:Enregistrer la production (POST /productions)\n- catégorie de produit, nom, unité, date de récolte;
-
-if (Plusieurs membres impliqués ?) then (oui)
-  :Ajouter les membres avec leurs quantités\n(POST /productions/{id}/members\n- ProductionMemberService);
-else (non)
+:Planifier la culture\n(calendrier agricole);
+:Enregistrer la production;
+:Créer le lot de traçabilité\n(lot, QR code);
+:Alimenter le stock;
+if (Récolte vendue ?) then (non)
+  :Valoriser la production;
+else (oui)
+  :Créer la vente;
+  :Créer la livraison;
+  :Enregistrer le paiement;
+  :Mettre à jour le stock;
 endif
-
-:Suivre l'historique de la production\n(vaccins, traitements, engrais);
-
-:Créer le lot de traçabilité\n(POST /traceability/lots - lot_number, QR code);
-
-:Valider et affecter le stock disponible\n(Stock lié à la production - 1:1);
-
-if (Récolte vendue ?) then (oui)
-  :Créer une vente (POST /sales)\n- quantity_sold x unit_price = total_amount;
-
-  :Créer la livraison (Delivery)\n- PENDING / IN_TRANSIT / DELIVERED;
-
-  :Enregistrer le paiement échelonné (Payment)\n- statut PENDING / PAID;
-
-  :Mettre à jour le stock\n- SOLD / DEPLETED;
-else (non)
-endif
-
-:Valoriser la production\n(statistiques: valeur totale, catégorie, mensuel);
-
 :Journaliser dans l'audit;
-
 stop
 @enduml

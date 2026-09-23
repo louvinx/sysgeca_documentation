@@ -1,33 +1,20 @@
 @startuml
-title Processus d'organisation d'une assemblée générale
+title Organisation d'une assemblée générale
 
 skinparam shadowing false
 
 start
-:Ouvrir "Gouvernance" (GovernancePage);
-
-:Créer une assemblée (POST /governance/assemblies)\n- titre, type, dates, lieu;
-
-if (Rôle admin ou manager ?) then (non)
-  :Accès refusé (403); stop
+:Créer l'assemblée\n(titre, dates, lieu);
+if (Rôle admin / manager ?) then (non)
+  :Accès refusé (403);
+  stop
 else (oui)
 endif
-
-:État initial DRAFT;
-
-:Passer l'assemblée à SCHEDULED\n(planifier les dates);
-
-:Ajouter les participants\n(POST /governance/assemblies/{id}/participants\nou /participants/batch);
-
-:Ouvrir l'assemblée - état IN_PROGRESS;
-
-:Enregistrer les présences\n(PUT /governance/participants/{id}\n- PRESENT / ABSENT);
-
-:Rédiger le procès-verbal (MinutesEditor)\net la liste des décisions;
-
-:Terminer l'assemblée - état COMPLETED\n(ou CANCELLED si annulation);
-
-:Journaliser dans l'audit (entité "assembly");
-
+:Planifier l'assemblée (SCHEDULED);
+:Ajouter les participants;
+:Ouvrir l'assemblée (IN_PROGRESS);
+:Enregistrer les présences;
+:Rédiger le procès-verbal\net les décisions;
+:Terminer l'assemblée (COMPLETED);
 stop
 @enduml
